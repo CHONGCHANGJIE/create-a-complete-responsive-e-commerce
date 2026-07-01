@@ -17,9 +17,10 @@ export function ProductCard({ product }: { product: Product }) {
   const discount = product.compareAt ? Math.round(((product.compareAt - product.price) / product.compareAt) * 100) : 0;
 
   return (
-    <motion.div whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 260, damping: 20 }}>
-      <Card className="group h-full overflow-hidden">
-        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+    <motion.div whileHover={{ y: -7 }} transition={{ type: "spring", stiffness: 260, damping: 20 }}>
+      <Card className="group h-full overflow-hidden border-zinc-200/80 bg-card shadow-[0_10px_35px_rgba(15,23,42,0.06)] hover:border-primary/60 hover:shadow-industrial dark:border-zinc-800">
+        <div className="relative aspect-[4/3] overflow-hidden bg-zinc-950">
+          <div className="industrial-grid absolute inset-0 opacity-30" />
           <Image
             alt={product.name}
             className="object-cover transition duration-500 group-hover:scale-105"
@@ -27,6 +28,7 @@ export function ProductCard({ product }: { product: Product }) {
             sizes="(max-width: 768px) 100vw, 25vw"
             src={product.image}
           />
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-zinc-950/55 to-transparent" />
           <div className="absolute left-3 top-3 flex gap-2">
             {discount > 0 && <Badge className="border-primary bg-primary text-zinc-950">-{discount}%</Badge>}
             {product.isNew && <Badge className="bg-zinc-950 text-white">New</Badge>}
@@ -43,10 +45,10 @@ export function ProductCard({ product }: { product: Product }) {
             </Button>
           </div>
         </div>
-        <CardContent className="flex h-[260px] flex-col">
+        <CardContent className="flex h-[270px] flex-col p-4">
           <div className="mb-2 flex items-center justify-between gap-2 text-xs text-muted-foreground">
-            <span>{product.sku}</span>
-            <span>{product.brand}</span>
+            <span className="rounded bg-muted px-2 py-1 font-semibold">{product.sku}</span>
+            <span className="font-black uppercase text-primary">{product.brand}</span>
           </div>
           <Link className="line-clamp-2 min-h-10 font-bold hover:text-primary" href={`/product/${product.slug}`}>
             {product.name}
@@ -60,7 +62,7 @@ export function ProductCard({ product }: { product: Product }) {
             <span className="text-xl font-black">{formatCurrency(product.price)}</span>
             {product.compareAt && <span className="text-sm text-muted-foreground line-through">{formatCurrency(product.compareAt)}</span>}
           </div>
-          <div className={cn("mt-2 text-sm font-semibold", product.stock > 0 ? "text-emerald-600" : "text-red-600")}>
+          <div className={cn("mt-2 w-fit rounded-full px-2.5 py-1 text-xs font-black", product.stock > 0 ? "bg-emerald-500/10 text-emerald-600" : "bg-red-500/10 text-red-600")}>
             {product.stock > 0 ? `${product.stock} in stock` : "Backorder"}
           </div>
           <div className="mt-auto grid grid-cols-[1fr_auto] gap-2">

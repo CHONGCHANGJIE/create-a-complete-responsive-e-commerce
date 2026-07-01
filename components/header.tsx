@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Heart, Menu, Moon, Scale, ShoppingCart, Sun, X } from "lucide-react";
+import { Heart, Menu, Moon, Scale, ShieldCheck, ShoppingCart, Sun, Truck, X } from "lucide-react";
 import { navLinks } from "@/data/products";
 import { Button } from "@/components/ui/button";
 import { SearchBox } from "@/components/search-box";
@@ -13,19 +13,25 @@ export function Header() {
   const { cartCount, wishlist, compare, dark, toggleDark } = useStore();
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b bg-background/95 shadow-sm backdrop-blur">
+      <div className="hidden border-b bg-zinc-950 text-xs font-semibold text-zinc-300 md:block">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
+          <span className="flex items-center gap-2"><Truck className="h-3.5 w-3.5 text-primary" /> Free delivery over $250</span>
+          <span className="flex items-center gap-2"><ShieldCheck className="h-3.5 w-3.5 text-primary" /> Trade-grade brands and local pickup</span>
+        </div>
+      </div>
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3">
         <Link className="flex items-center gap-2 font-black tracking-normal" href="/">
-          <span className="grid h-9 w-9 place-items-center rounded-md bg-primary text-zinc-950">HH</span>
+          <span className="grid h-10 w-10 place-items-center rounded-md bg-zinc-950 text-primary ring-2 ring-primary/30 dark:bg-primary dark:text-zinc-950">HH</span>
           <span className="text-lg">HardwareHub</span>
         </Link>
         <nav className="hidden items-center gap-5 text-sm font-semibold lg:flex">
           {navLinks.map((link) => (
-            <Link className="text-muted-foreground transition hover:text-primary" href={link.href} key={link.href}>
+            <Link className="rounded-md px-2 py-1.5 text-muted-foreground transition hover:bg-muted hover:text-primary" href={link.href} key={link.href}>
               {link.label}
             </Link>
           ))}
-          <Link className="text-muted-foreground transition hover:text-primary" href="/store-locator">
+          <Link className="rounded-md px-2 py-1.5 text-muted-foreground transition hover:bg-muted hover:text-primary" href="/store-locator">
             Stores
           </Link>
         </nav>

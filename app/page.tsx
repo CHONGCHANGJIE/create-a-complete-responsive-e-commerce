@@ -25,14 +25,18 @@ export default function HomePage() {
   return (
     <div>
       <section className="relative overflow-hidden bg-zinc-950 text-white">
-        <div className="absolute inset-0 opacity-35" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1800&q=80')", backgroundSize: "cover", backgroundPosition: "center" }} />
-        <motion.div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,122,0,.28),transparent_35%),linear-gradient(90deg,rgba(9,9,11,.92),rgba(9,9,11,.58))]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} />
-        <div className="relative mx-auto grid min-h-[calc(100vh-72px)] max-w-7xl content-center gap-8 px-4 py-16 lg:grid-cols-[1.1fr_.9fr]">
+        <div className="industrial-grid absolute inset-0 opacity-30" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_15%,rgba(255,122,0,.34),transparent_34%),linear-gradient(110deg,rgba(9,9,11,.98),rgba(24,24,27,.86)_48%,rgba(9,9,11,.72))]" />
+        <div
+          className="absolute right-0 top-0 hidden h-full w-1/2 bg-cover bg-center opacity-75 mix-blend-screen lg:block"
+          style={{ backgroundImage: "url('/products/power-tools.png')" }}
+        />
+        <div className="relative mx-auto grid min-h-[calc(100vh-72px)] max-w-7xl content-center gap-8 px-4 py-16 lg:grid-cols-[1.05fr_.95fr]">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <p className="mb-3 text-sm font-black uppercase text-primary">Industrial-grade supply, built for speed</p>
-            <h1 className="max-w-4xl text-4xl font-black tracking-normal md:text-6xl">HardwareHub</h1>
-            <p className="mt-5 max-w-2xl text-lg text-zinc-200">A premium online hardware store for contractors, engineers, maintenance crews, and serious makers.</p>
-            <div className="mt-7 max-w-2xl">
+            <p className="mb-3 inline-flex rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm font-black uppercase text-primary">Industrial-grade supply, built for speed</p>
+            <h1 className="max-w-4xl text-4xl font-black tracking-normal md:text-7xl">HardwareHub</h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-zinc-200">A sharper online hardware store for contractors, engineers, maintenance crews, and serious workshop buyers.</p>
+            <div className="mt-7 max-w-2xl rounded-lg border border-white/10 bg-white/10 p-2 shadow-2xl backdrop-blur">
               <SearchBox />
             </div>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -46,14 +50,14 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.7 }}
           >
-            <div className="grid gap-3 rounded-lg border border-white/15 bg-white/10 p-5 backdrop-blur">
+            <div className="grid gap-3 rounded-lg border border-white/15 bg-zinc-950/70 p-5 shadow-2xl backdrop-blur">
               {[
                 ["80+", "hardware products"],
                 ["13", "trusted brands"],
                 ["24h", "dispatch window"]
               ].map(([value, label]) => (
                 <div className="flex items-center justify-between border-b border-white/10 pb-3 last:border-0 last:pb-0" key={label}>
-                  <span className="text-3xl font-black text-primary">{value}</span>
+                  <motion.span className="text-3xl font-black text-primary" initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }}>{value}</motion.span>
                   <span className="text-sm uppercase text-zinc-300">{label}</span>
                 </div>
               ))}
@@ -65,7 +69,17 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-4 md:grid-cols-3">
           {serviceCards.map(([Icon, title, body]) => (
-            <Card key={title}><CardContent className="flex gap-4"><Icon className="h-7 w-7 text-primary" /><div><h3 className="font-bold">{title}</h3><p className="text-sm text-muted-foreground">{body}</p></div></CardContent></Card>
+            <Card className="border-zinc-200/80 shadow-[0_10px_35px_rgba(15,23,42,0.06)] dark:border-zinc-800" key={title}>
+              <CardContent className="flex gap-4">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-md bg-primary/10">
+                  <Icon className="h-6 w-6 text-primary" />
+                </span>
+                <div>
+                  <h3 className="font-bold">{title}</h3>
+                  <p className="text-sm text-muted-foreground">{body}</p>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>
@@ -81,8 +95,10 @@ export default function HomePage() {
         <SectionHeading eyebrow="Departments" title="Product Categories" />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((category) => (
-            <Link className="rounded-lg border bg-card p-5 transition hover:-translate-y-1 hover:border-primary hover:shadow-industrial" href={`/shop?category=${encodeURIComponent(category.name)}`} key={category.name}>
-              <category.icon className="mb-4 h-8 w-8 text-primary" />
+            <Link className="group rounded-lg border bg-card p-5 shadow-[0_10px_35px_rgba(15,23,42,0.05)] transition hover:-translate-y-1 hover:border-primary hover:shadow-industrial" href={`/shop?category=${encodeURIComponent(category.name)}`} key={category.name}>
+              <span className="mb-4 grid h-12 w-12 place-items-center rounded-md bg-zinc-950 text-primary transition group-hover:bg-primary group-hover:text-zinc-950 dark:bg-zinc-900">
+                <category.icon className="h-6 w-6" />
+              </span>
               <h3 className="font-black">{category.name}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{category.description}</p>
             </Link>
@@ -125,7 +141,7 @@ export default function HomePage() {
         <SectionHeading eyebrow="Reviews" title="Customer Testimonials" />
         <div className="grid gap-5 md:grid-cols-3">
           {testimonials.map((item) => (
-            <Card key={item.name}><CardContent><p className="text-muted-foreground">“{item.quote}”</p><p className="mt-4 font-bold">{item.name}</p><p className="text-sm text-primary">{item.role}</p></CardContent></Card>
+            <Card key={item.name}><CardContent><p className="text-muted-foreground">"{item.quote}"</p><p className="mt-4 font-bold">{item.name}</p><p className="text-sm text-primary">{item.role}</p></CardContent></Card>
           ))}
         </div>
       </section>

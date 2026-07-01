@@ -31,8 +31,22 @@ html {
 }
 
 body {
-  background: hsl(var(--background));
+  background:
+    linear-gradient(180deg, rgba(255, 122, 0, 0.035), transparent 360px),
+    hsl(var(--background));
   color: hsl(var(--foreground));
+}
+
+::selection {
+  background: #ff7a00;
+  color: #111827;
+}
+
+.industrial-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 42px 42px;
 }
 
 .ripple {

@@ -64,18 +64,24 @@ export const brands = [
   "Ingco"
 ];
 
-const imageIds = [
-  "photo-1504148455328-c376907d081c",
-  "photo-1586864387967-d02ef85d93e8",
-  "photo-1530124566582-a618bc2615dc",
-  "photo-1609205807107-e8ec2120f9de",
-  "photo-1606676539940-12768ce0e762",
-  "photo-1581244277943-fe4a9c777189",
-  "photo-1621905252507-b35492cc74b4",
-  "photo-1619642751034-765dfdf7c58e",
-  "photo-1558618666-fcd25c85cd64",
-  "photo-1572981779307-38b8cabb2407"
-];
+const categoryImageSlugs: Record<string, string> = {
+  "Hand Tools": "hand-tools",
+  "Power Tools": "power-tools",
+  Electrical: "electrical",
+  Plumbing: "plumbing",
+  Fasteners: "fasteners",
+  "Safety Equipment": "safety-equipment",
+  Welding: "welding",
+  "Measuring Tools": "measuring-tools",
+  Gardening: "gardening",
+  Automotive: "automotive",
+  Pneumatics: "pneumatics",
+  "Industrial Supplies": "industrial-supplies"
+};
+
+function productImageUrl(category: string) {
+  return `/products/${categoryImageSlugs[category] || "industrial-supplies"}.png`;
+}
 
 const productNames = [
   ["Power Tools", "18V Brushless Cordless Drill Kit"],
@@ -174,7 +180,6 @@ export const products: Product[] = productNames.map(([category, name], index) =>
   const price = Math.round((18 + (index % 17) * 11 + Math.floor(index / 7) * 7) * 100) / 100;
   const isSale = index % 4 === 0;
   const isNew = index % 5 === 0;
-  const imageId = imageIds[index % imageIds.length];
   return {
     id: `hh-${String(index + 1).padStart(3, "0")}`,
     slug: `${brand}-${name}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
@@ -189,7 +194,7 @@ export const products: Product[] = productNames.map(([category, name], index) =>
     stock: index % 9 === 0 ? 0 : 8 + (index % 23),
     isNew,
     isSale,
-    image: `https://images.unsplash.com/${imageId}?auto=format&fit=crop&w=900&q=80`,
+    image: productImageUrl(category),
     description: `${brand} ${name} built for demanding hardware buyers, maintenance teams, contractors, and serious workshop users.`,
     features: [
       "Industrial-grade materials with jobsite-ready durability",
